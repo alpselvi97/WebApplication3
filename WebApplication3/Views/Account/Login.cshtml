@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Kullanıcı Girişi</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+    <style>
+        .myButton {
+            background-color: #4c8baf;
+            border: none;
+            color: yellow;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        .login-container {
+            text-align: center;
+            margin: 0 auto;
+            width: 300px;
+            height: 100vh; /* Ekran yüksekliğine kadar uzatmak için */
+        }
+
+        .input-field {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="input-field">
+            <input id="kullaniciAdi" name="kullaniciAdi" placeholder="Kullanıcı Adı" />
+        </div>
+        <div class="input-field">
+            <input type="password" id="sifre" name="sifre" placeholder="Şifre" />
+        </div>
+        <div class="input-field">
+            <button class="myButton" onclick="LoginCheck()">Giriş Yap</button>
+        </div>
+        <div id="successMessage" class="hidden">
+            <p class="success-text">Giriş Başarılı</p>
+        </div>
+        <div id="errorMessage" class="hidden">
+            <p class="success-text">Kullanıcı Adı veya Şifre Hatalı</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function LoginCheck() {
+            var username = $("#kullaniciAdi").val();
+            var password = $("#sifre").val();
+
+            $.ajax({
+                type: "POST",
+                url: '/Login/CheckLogin',
+                data: {
+                    username: username,
+                    password: password
+                },
+                success: function (data) {
+                    if (data.success) {
+                        $("#successMessage").removeClass("hidden");
+                    } else {
+                        $("#errorMessage").removeClass("hidden");
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
